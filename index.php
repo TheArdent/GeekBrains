@@ -1,28 +1,1 @@
-<?php
-require_once ('config.php');
-
-try {
-    $connect_str = DB_DRIVER . ':host='. DB_HOST . ';dbname=' . DB_NAME;
-    $conn = new PDO($connect_str, DB_USER, DB_PASS);
-
-    $result = $conn->query("SELECT * FROM articles WHERE 1");
-
-    $errors = $conn->errorInfo();
-
-    if ( $conn->errorCode() != 0000 )
-        echo "SQL error :".$errors[2]."<br/>";
-    echo "<table border='1' style='width:50%;margin: auto'>";
-    while($row = $result->fetch())
-    {
-        echo "<tr><td>".$row['id_articles']."</td><td>".$row['title']."</td><td>".$row['content']."</td></tr>";
-    }
-    echo "</table>";
-
-    $conn = null;
-}
-catch(PDOException $e)
-{
-    echo "Connection failed: " . $e->getMessage();
-}
-
-
+<h2>Главная</h2><?phpinclude_once('startup.php');include_once('model.php');// Установка параметров, подключение к БД, запуск сессии.startup();// Извлечение стать.$articlesIntro = articles_intro();// Кодировка.header('Content-type: text/html; charset=utf-8');// Вывод в шаблон.include('theme/index.php');
