@@ -14,4 +14,19 @@ $article = articles_get(isset($_GET['id'])? $_GET['id'] : False);
 header('Content-type: text/html; charset=utf-8');
 
 // Вывод в шаблон.
-include('theme/article.php');
+
+$title = $article['title'];
+
+// Внутренний шаблон.
+$content = view_include('view/v_article.php',array('title' => $title,'article' => $article));
+
+
+// Внешний шаблон.
+
+$page = view_include(
+	'view/v_main.php',
+	array('title' => $title, 'content' => $content)
+);
+
+// Вывод.
+echo $page;
