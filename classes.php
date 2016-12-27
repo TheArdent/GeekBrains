@@ -2,13 +2,13 @@
 
 class Article
 {
-	public $id;
+	protected $id;
 	protected $title;
 	protected $content;
 
-	public $preview;
+	protected $preview;
 
-	function Article($id, $title, $content)
+	public function Article($id, $title, $content)
 	{
 		$this->id = $id;
 		$this->title = $title;
@@ -23,9 +23,19 @@ class Article
 	}
 	
 	//  Функция для вывода статьи
-	function view()
+	public function view()
 	{
 		echo "<h1>$this->title</h1><p>$this->content</p>";
+	}
+
+	public function get_id()
+	{
+		return $this->id;
+	}
+
+	public function get_preview()
+	{
+		return $this->preview;
 	}
 }
 
@@ -33,14 +43,14 @@ class NewsArticle extends Article
 {
 	protected $datetime;
 
-	function NewsArticle($id, $title, $content)
+	public function NewsArticle($id, $title, $content)
 	{
 		parent::Article($id, $title, $content);
 		$this->datetime = time();
 	}
 	
 	//  Функция для вывода статьи
-	function view()
+	public function view()
 	{
 		echo "<h1>$this->title</h1><span style='color: red'>".
 				strftime('%d.%m.%y', $this->datetime).
@@ -51,14 +61,14 @@ class NewsArticle extends Article
 class CrossArticle extends Article
 {
 	protected $source;
-	
-	function CrossArticle($id, $title, $content, $source)
+
+	public function CrossArticle($id, $title, $content, $source)
 	{
 		parent::Article($id, $title, $content);
 		$this->source = $source;
 	}
 
-	function view()
+	public function view()
 	{
 		parent::view();
 		echo '<small>'.$this->source.'</small>';
@@ -68,14 +78,14 @@ class CrossArticle extends Article
 class ArticleList
 {
 	protected $alist;
-	
-	function add(Article $article)
+
+	public function add(Article $article)
 	{
 		$this->alist[] = $article;
 	}
 	
 	//  Вывод статей
-	function view()
+	public function view()
 	{
 		foreach($this->alist as $article)
 		{
@@ -85,13 +95,42 @@ class ArticleList
 	}
 
 	//Удаление статьи
-	function delete($id)
+	public function delete($id)
 	{
 		for ($i = 0; $i < count($this->alist); $i++)
 		{
-			if ($this->alist[$i]->id == $id)
+			if ($this->alist[$i]->get_id() == $id)
 				unset($this->alist[$i]);
 		}
 	}
 }
-?>
+
+class FullArticle extends Article
+{
+	protected $img;
+
+	public function FullArticle($id, $title, $content, $img)
+	{
+		parent::Article($id, $title, $content);
+		$this->img = $img;
+	}
+
+	//  Функция для вывода статьи
+	public function view()
+	{
+		parent::view();
+		echo '<img src="'.$this->img.'" alt="Тут должно быть изображение">';
+	}
+}
+
+class InverseArticleList extends ArticleList
+{
+	public function view()
+	{
+		foreach (array_reverse($this->alist) as $article)
+		{
+			$article->view();
+			echo '<hr />';
+		}
+	}
+}

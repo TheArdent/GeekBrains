@@ -3,8 +3,6 @@ require_once 'classes.php';
 
 // Здесь разместить код, использующий классы из classes.php
 
-//Задача №1
-
 $newarticle1 = new NewsArticle(1,"First article","Content for first article");
 $newarticle2 = new NewsArticle(2,"Second article","Content for second article");
 $newarticle3 = new NewsArticle(3,"New article","Content for new article");
@@ -24,42 +22,9 @@ $articleList->add($crosarticle1);
 $articleList->add($crosarticle2);
 $articleList->add($crosarticle3);
 
-//Задача №2
 
-class FullArticle extends Article
-{
-	protected $img;
-
-	function FullArticle($id, $title, $content, $img)
-	{
-		parent::Article($id, $title, $content);
-		$this->img = $img;
-	}
-
-	//  Функция для вывода статьи
-	function view()
-	{
-		parent::view();
-		echo '<img src="'.$this->img.'" alt="Тут должно быть изображение">';
-	}
-}
 $fullArticle1 = new FullArticle(7,"1st article with img","Content with google img","http://www.jobvine.co.za/Content/images/ig/google_logo.jpg");
 $fullArticle2 = new FullArticle(8,"2nd article with img","Content with Chrome img","http://blog.sudobits.com/wp-content/uploads/2011/04/google-chrome-11-logo.jpg");
 
 $articleList->add($fullArticle1);
 $articleList->add($fullArticle2);
-
-//Задача №4
-
-class InverseArticleList extends ArticleList
-{
-	function view()
-	{
-		foreach (array_reverse($this->alist) as $article)
-		{
-			$article->view();
-			echo '<hr />';
-		}
-	}
-}
-
