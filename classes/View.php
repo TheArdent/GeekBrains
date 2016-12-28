@@ -37,16 +37,7 @@ class View
 
 	public function display($template)
 	{
-		foreach ($this->buffer as $key => $value)
-		{
-			$$key = $value;
-		}
-		$content = $this->render($template);
-		ob_start();
-		include __DIR__.'/../views/v_main.php';
-		$temp = ob_get_contents();
-		ob_end_clean();
-		echo $temp;
+		echo $this->render($template);
 	}
 
 	public function current()
