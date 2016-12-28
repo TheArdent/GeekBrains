@@ -12,6 +12,8 @@ class View
 {
 	protected $buffer = [];
 
+	private $mainView = 'v_main';
+
 	public function __set($key,$value)
 	{
 		$this->buffer[$key] = $value;
@@ -35,9 +37,9 @@ class View
 		return $temp;
 	}
 
-	public function display($template)
+	public function display()
 	{
-		echo $this->render($template);
+		echo $this->render($this->mainView);
 	}
 
 	public function current()

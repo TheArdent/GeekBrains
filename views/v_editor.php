@@ -3,11 +3,11 @@
 <hr/>
 <ul>
 	<li>
-		<b><a href="new.php">Новая статья</a></b>
+		<b><a href="index.php?ctrl=Admin&action=Add">Новая статья</a></b>
 	</li>
 	<? foreach ($articles as $article): ?>
 		<li>
-			<a href="edit.php?id=<?=$article['id_article']?>">
+			<a href="index.php?ctrl=Admin&action=Edit&id=<?=$article['id_article']?>">
 				<?=$article['title']?>
 			</a>
 		</li>

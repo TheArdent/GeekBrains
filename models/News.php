@@ -14,14 +14,52 @@ class News
 	private $title;
 	private $content;
 
-	public function deleteArticle($id)
+	public static function deleteArticle($id)
 	{
-		//TODO
+		$connect_str = DB_DRIVER . ':host='. DB_HOST . ';dbname=' . DB_NAME;
+		$conn = new PDO($connect_str, DB_USER, DB_PASS);
+
+		$row = $conn->exec("DELETE FROM articles WHERE id_article=$id");
+
+		$errors = $conn->errorInfo();
+
+		if ( $conn->errorCode() != 0000 )
+			echo "SQL error :".$errors[2]."<br/>";
+
+		return !$row;
 	}
 
-	public function addArticle($title, $content)
+	public static function addArticle($title, $content)
 	{
-		//TODO
+		if (empty($title) or empty($content))
+			return True;
+
+		$connect_str = DB_DRIVER . ':host='. DB_HOST . ';dbname=' . DB_NAME;
+		$conn = new PDO($connect_str, DB_USER, DB_PASS);
+
+		$row = $conn->exec("INSERT INTO articles (title, content) VALUES ('$title','$content')");
+
+		$errors = $conn->errorInfo();
+
+		if ( $conn->errorCode() != 0000 )
+			echo "SQL error :".$errors[2]."<br/>";
+
+		return !$row;
+	}
+
+	public static function editArticle($id, $title, $content)
+	{
+		$connect_str = DB_DRIVER . ':host='. DB_HOST . ';dbname=' . DB_NAME;
+		$conn = new PDO($connect_str, DB_USER, DB_PASS);
+
+		$row = $conn->exec("UPDATE articles SET `title`='$title',`content`='$content' WHERE id_article=$id");
+
+		$errors = $conn->errorInfo();
+
+		if ($conn->errorCode() != 0000)
+			echo "SQL error :" . $errors[2] . "<br/>";
+
+		return !$row;
 	}
 
 	public static function getAll()

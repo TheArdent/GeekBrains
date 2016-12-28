@@ -10,8 +10,7 @@ class NewsController
 		$view->articles = $news;
 		$view->title = 'Главная страница';
 		$view->content = $view->render('v_index');
-		$view->display('v_main');
-
+		$view->display();
 	}
 
 	public function actionOne()
@@ -25,6 +24,6 @@ class NewsController
 		$view->title = $view->article['title'];
 
 		$view->content = $view->render('v_article');
-		$view->display('v_main');
+		$view->display();
 	}
 }
