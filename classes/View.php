@@ -10,31 +10,34 @@
 class View
 		implements Iterator
 {
-	protected $buffer = [];
-
+	protected $data = [];
+	private $position;
 	private $mainView = 'v_main';
 
 	public function __set($key,$value)
 	{
-		$this->buffer[$key] = $value;
+		$this->data[$key] = $value;
+	}
+
+	public function __construct()
+	{
+		$this->position = 0;
 	}
 
 	public function __get($key)
 	{
-		return $this->buffer[$key];
+		return $this->data[$key];
 	}
 
 	public function render($template)
 	{
-		foreach ($this->buffer as $key => $value)
+		foreach ($this->data as $key => $value)
 		{
 			$$key = $value;
 		}
 		ob_start();
 		include __DIR__.'/../views/'.$template.'.php';
-		$temp = ob_get_contents();
-		ob_end_clean();
-		return $temp;
+		return ob_get_clean();
 	}
 
 	public function display()
@@ -44,26 +47,26 @@ class View
 
 	public function current()
 	{
-		// TODO: Implement current() method.
+		return $this->data[$this->position];
 	}
 
 	public function next()
 	{
-		// TODO: Implement next() method.
+		++$this->position;
 	}
 
 	public function key()
 	{
-		// TODO: Implement key() method.
+		return $this->position;
 	}
 
 	public function valid()
 	{
-		// TODO: Implement valid() method.
+		return isset($this->data[$this->position]);
 	}
 
 	public function rewind()
 	{
-		// TODO: Implement rewind() method.
+		$this->position = 0;
 	}
 }

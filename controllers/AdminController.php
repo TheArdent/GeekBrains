@@ -5,12 +5,12 @@ class AdminController
 
 	public static function actionAdd()
 	{
-		//TODO
 		$error = False;
 		if (isset($_POST['title']) && isset($_POST['content'])) {
 			$error = News::addArticle($_POST['title'], $_POST['content']);
-			if (!$error)
+			if (!$error) {
 				header('Location: index.php?ctrl=Admin');
+			}
 		}
 		$view = new View();
 		$view->title = 'Добавление статьи';
@@ -25,8 +25,9 @@ class AdminController
 		if (isset($_POST['delete_id']))
 		{
 			$error = News::deleteArticle($_POST['delete_id']);
-			if (!$error)
+			if (!$error) {
 				header('Location: index.php?ctrl=Admin');
+			}
 		}
 		if (isset($_POST['title']) && isset($_POST['content'])) {
 			$error = News::editArticle($_GET['id'],$_POST['title'], $_POST['content']);
@@ -43,7 +44,6 @@ class AdminController
 
 	public function actionAll()
 	{
-		//TODO
 		$news = News::getAll();
 		$view = new View();
 		$view->articles = $news;
@@ -54,7 +54,6 @@ class AdminController
 
 	public function actionOne()
 	{
-		//TODO
 		$id = isset($_GET['id']) ? $_GET['id'] : die('failed id');
 		$news = News::getOne($id);
 

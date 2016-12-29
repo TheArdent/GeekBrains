@@ -4,7 +4,6 @@ class NewsController
 {
 	public function actionAll()
 	{
-		//TODO
 		$news = News::getAll();
 		$view = new View();
 		$view->articles = $news;
@@ -15,7 +14,6 @@ class NewsController
 
 	public function actionOne()
 	{
-		//TODO
 		$id = isset($_GET['id']) ? $_GET['id'] : die('failed id');
 		$news = News::getOne($id);
 
