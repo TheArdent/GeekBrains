@@ -26,6 +26,9 @@ class News
 		if ( $conn->errorCode() != 0000 )
 			echo "SQL error :".$errors[2]."<br/>";
 
+		// соединение больше не нужно, закрываем
+		$conn = null;
+
 		return !$row;
 	}
 
@@ -44,6 +47,9 @@ class News
 		if ( $conn->errorCode() != 0000 )
 			echo "SQL error :".$errors[2]."<br/>";
 
+		// соединение больше не нужно, закрываем
+		$conn = null;
+
 		return !$row;
 	}
 
@@ -58,6 +64,10 @@ class News
 
 		if ($conn->errorCode() != 0000)
 			echo "SQL error :" . $errors[2] . "<br/>";
+
+		// соединение больше не нужно, закрываем
+
+		$conn = null;
 
 		return !$row;
 	}
@@ -80,6 +90,10 @@ class News
 			$buff[] = $row;
 		}
 
+		// соединение больше не нужно, закрываем
+		$result = null;
+		$conn = null;
+
 		return $buff;
 	}
 	public static function getOne($id)
@@ -93,6 +107,9 @@ class News
 
 		if ($conn->errorCode() != 0000)
 			echo "SQL error :" . $errors[2] . "<br/>";
+
+		// соединение больше не нужно, закрываем
+		$conn = null;
 
 		while ($row = $result->fetch()) {
 			return $row;

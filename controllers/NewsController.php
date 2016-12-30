@@ -8,7 +8,7 @@ class NewsController
 		$view = new View();
 		$view->articles = $news;
 		$view->title = 'Главная страница';
-		$view->content = $view->render('v_index');
+		$view->content = $view->render('News/index');
 		$view->display();
 	}
 
@@ -21,7 +21,7 @@ class NewsController
 		$view->article = $news;
 		$view->title = $view->article['title'];
 
-		$view->content = $view->render('v_article');
+		$view->content = $view->render('News/article');
 		$view->display();
 	}
 }

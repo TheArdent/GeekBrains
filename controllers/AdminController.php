@@ -15,7 +15,8 @@ class AdminController
 		$view = new View();
 		$view->title = 'Добавление статьи';
 		$view->error = $error;
-		$view->content = $view->render('v_new');
+
+		$view->content = $view->render('News/new');
 		$view->display();
 	}
 
@@ -31,14 +32,16 @@ class AdminController
 		}
 		if (isset($_POST['title']) && isset($_POST['content'])) {
 			$error = News::editArticle($_GET['id'],$_POST['title'], $_POST['content']);
-			if (!$error)
+			if (!$error) {
 				header('Location: index.php?ctrl=Admin');
+			}
 		}
 		$view = new View();
 		$view->title = 'Редактирование статьи статьи';
 		$view->error = $error;
 		$view->article = News::getOne($_GET['id']);
-		$view->content = $view->render('v_edit');
+
+		$view->content = $view->render('News/edit');
 		$view->display();
 	}
 
@@ -48,7 +51,8 @@ class AdminController
 		$view = new View();
 		$view->articles = $news;
 		$view->title = 'Главная страница';
-		$view->content = $view->render('v_editor');
+
+		$view->content = $view->render('News/editor');
 		$view->display();
 	}
 
@@ -61,7 +65,7 @@ class AdminController
 		$view->article = $news;
 		$view->title = $view->article['title'];
 
-		$view->content = $view->render('v_edit');
+		$view->content = $view->render('News/edit');
 		$view->display();
 	}
 }
