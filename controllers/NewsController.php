@@ -21,7 +21,6 @@ class NewsController
 		$view = new View();
 		$view->article = $news;
 		$view->title = $news['title'];
-
 		$view->content = $view->render('News/article');
 		$view->display();
 	}

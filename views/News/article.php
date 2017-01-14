@@ -4,3 +4,5 @@
 <hr/>
 <h3><?=$article['title']?></h3>
 <p><?=$article['content']?></p>
+<div class="comments" style="margin-left: 1%">
+</div>
