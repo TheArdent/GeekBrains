@@ -4,7 +4,8 @@ class NewsController
 {
 	public function actionAll()
 	{
-		$news = News::getAll();
+		$New = News::Instance();
+		$news = $New->All();
 		$view = new View();
 		$view->articles = $news;
 		$view->title = 'Главная страница';
@@ -15,11 +16,11 @@ class NewsController
 	public function actionOne()
 	{
 		$id = isset($_GET['id']) ? $_GET['id'] : die('failed id');
-		$news = News::getOne($id);
-
+		$New = News::Instance();
+		$news = $New->Get($id);
 		$view = new View();
 		$view->article = $news;
-		$view->title = $view->article['title'];
+		$view->title = $news['title'];
 
 		$view->content = $view->render('News/article');
 		$view->display();

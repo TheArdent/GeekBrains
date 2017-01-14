@@ -10,110 +10,43 @@ include_once __DIR__.'/../classes/DB.php';
  */
 class News
 {
-	private $id;
-	private $title;
-	private $content;
+	private static $instance;
 
-	public static function deleteArticle($id)
+	public static function Instance()
 	{
-		$connect_str = DB_DRIVER . ':host='. DB_HOST . ';dbname=' . DB_NAME;
-		$conn = new PDO($connect_str, DB_USER, DB_PASS);
-
-		$row = $conn->exec("DELETE FROM articles WHERE id_article=$id");
-
-		$errors = $conn->errorInfo();
-
-		if ( $conn->errorCode() != 0000 )
-			echo "SQL error :".$errors[2]."<br/>";
-
-		// соединение больше не нужно, закрываем
-		$conn = null;
-
-		return !$row;
+		if (self::$instance == null)
+		self::$instance = new self();
+		return self::$instance;
 	}
 
-	public static function addArticle($title, $content)
+	private function __construct(){	}
+
+	public function Delete($id)
 	{
-		if (empty($title) or empty($content))
-			return True;
-
-		$connect_str = DB_DRIVER . ':host='. DB_HOST . ';dbname=' . DB_NAME;
-		$conn = new PDO($connect_str, DB_USER, DB_PASS);
-
-		$row = $conn->exec("INSERT INTO articles (title, content) VALUES ('$title','$content')");
-
-		$errors = $conn->errorInfo();
-
-		if ( $conn->errorCode() != 0000 )
-			echo "SQL error :".$errors[2]."<br/>";
-
-		// соединение больше не нужно, закрываем
-		$conn = null;
-
-		return !$row;
+		$My_DB = DB::GetInstance();
+		return $My_DB->Delete('articles','id_article = '.$id);
 	}
 
-	public static function editArticle($id, $title, $content)
+	public function Add($title, $content)
 	{
-		$connect_str = DB_DRIVER . ':host='. DB_HOST . ';dbname=' . DB_NAME;
-		$conn = new PDO($connect_str, DB_USER, DB_PASS);
-
-		$row = $conn->exec("UPDATE articles SET `title`='$title',`content`='$content' WHERE id_article=$id");
-
-		$errors = $conn->errorInfo();
-
-		if ($conn->errorCode() != 0000)
-			echo "SQL error :" . $errors[2] . "<br/>";
-
-		// соединение больше не нужно, закрываем
-
-		$conn = null;
-
-		return !$row;
+		$My_DB = DB::GetInstance();
+		return $My_DB->Insert('articles', [ 'title' => $title, 'content' => $content]);
 	}
 
-	public static function getAll()
+	public function Edit($id, $title, $content)
 	{
-		$connect_str = DB_DRIVER . ':host='. DB_HOST . ';dbname=' . DB_NAME;
-		$conn = new PDO($connect_str, DB_USER, DB_PASS);
-
-		$result = $conn->query("SELECT * FROM articles ORDER BY id_article DESC");
-
-		$errors = $conn->errorInfo();
-
-		if ( $conn->errorCode() != 0000 )
-			echo "SQL error :".$errors[2]."<br/>";
-
-		$buff = [];
-		while($row = $result->fetch())
-		{
-			$buff[] = $row;
-		}
-
-		// соединение больше не нужно, закрываем
-		$result = null;
-		$conn = null;
-
-		return $buff;
+		$My_DB = DB::GetInstance();
+		return $My_DB->Update('articles',[ 'title' => $title, 'content' => $content],'id_article = '.$id);
 	}
-	public static function getOne($id)
+
+	public function All()
 	{
-		$connect_str = DB_DRIVER . ':host='. DB_HOST . ';dbname=' . DB_NAME;
-		$conn = new PDO($connect_str, DB_USER, DB_PASS);
-
-		$result = $conn->query("SELECT * FROM articles WHERE id_article=$id");
-
-		$errors = $conn->errorInfo();
-
-		if ($conn->errorCode() != 0000)
-			echo "SQL error :" . $errors[2] . "<br/>";
-
-		// соединение больше не нужно, закрываем
-		$conn = null;
-
-		while ($row = $result->fetch()) {
-			return $row;
-		}
-		return False;
+		$My_DB = DB::GetInstance();
+		return $My_DB->Select("SELECT * FROM articles ORDER BY id_article DESC");
+	}
+	public function Get($id)
+	{
+		$My_DB = DB::GetInstance();
+		return $My_DB->Select("SELECT * FROM articles WHERE id_article = {$id}")[0];
 	}
 }
