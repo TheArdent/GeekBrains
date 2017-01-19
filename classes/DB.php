@@ -3,8 +3,8 @@
 define('DB_DRIVER','mysql');
 define('DB_HOST','localhost');
 define('DB_NAME','Geekbrains');
-define('DB_USER','root');
-define('DB_PASS','123');
+define('DB_USER','homestead');
+define('DB_PASS','secret');
 
 class DB{
 	private static $instance;
@@ -56,11 +56,6 @@ class DB{
 		$sql = "INSERT INTO {$table} SET {$values};";
 
 		$this->link->exec($sql);
-
-		$errors = $this->link->errorInfo();
-
-		if ( $this->link->errorCode() != 0000 )
-			echo "SQL error :".$errors[2]."<br/>";
 
 		return $this->link->lastInsertId();
 	}

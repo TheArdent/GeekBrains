@@ -12,7 +12,7 @@ class View
 {
 	protected $data = [];
 	private $position;
-	private $mainView = 'News/main';
+	private $mainView = 'main';
 
 	public function __set($key,$value)
 	{
