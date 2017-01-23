@@ -16,10 +16,10 @@
 
         function loadComments(){
             var id = getUrlVars()["id"];
-            var str = "ctrl=Comments&action=All&id="+id;
+            var str = "id="+id;
             $.ajax({
                 type: "GET",
-                url: "index.php",
+                url: "Comments/All",
                 data: str,
                 success: function(msg){
                     $("div.comments").html(msg);
@@ -32,10 +32,10 @@
             var name = $("#name").val();
             var text = $("#message").val();
 
-            var str = "ctrl=Comments&action=Add&id="+id+"&name="+name+"&text="+text;
+            var str = "id="+id+"&name="+name+"&text="+text;
             $.ajax({
                 type: "POST",
-                url: "index.php",
+                url: "Comments/Add",
                 data: str,
                 success: loadComments()
             });
@@ -46,10 +46,10 @@
             var passwd = $("#password").val();
             var remember = $("#remember").is(':checked');
 
-            var str = "ctrl=User&action=login&login="+login+"&password="+passwd+"&remember="+remember;
+            var str = "login="+login+"&password="+passwd+"&remember="+remember;
             $.ajax({
                 type: "POST",
-                url: "index.php",
+                url: "User/login",
                 data: str,
                 success: function(msg){
                     $("div.login").html(msg);
@@ -61,10 +61,10 @@
             var login = $("#login").val();
             var passwd = $("#password").val();
 
-            var str = "ctrl=User&action=register&login="+login+"&password="+passwd;
+            var str = "login="+login+"&password="+passwd;
             $.ajax({
                 type: "POST",
-                url: "index.php",
+                url: "User/register",
                 data: str,
                 success: function(msg){
                     $("div.login").html(msg);
@@ -75,8 +75,8 @@
         function userLogout() {
             $.ajax({
                 type: "POST",
-                url: "index.php",
-                data: "ctrl=User&action=logout",
+                url: "User/logout",
+                data: "",
                 success: function(msg){
                     $("div.login").html(msg);
                 }
@@ -86,8 +86,8 @@
         function userIndex(){
             $.ajax({
                 type: "POST",
-                url: "index.php",
-                data: "ctrl=User&action=index",
+                url: "User/index",
+                data: "",
                 success: function(msg){
                     $("div.login").html(msg);
                 }
@@ -97,10 +97,10 @@
         function changeUser(user_id,item) {
             var role = $(item).prev('#roles').val();
 
-            var str = "ctrl=Admin&action=Roles&user_id="+user_id+"&role="+role;
+            var str = "user_id="+user_id+"&role="+role;
             $.ajax({
                 type: "GET",
-                url: "index.php",
+                url: "Admin/Roles",
                 data: str,
                 success: function(msg){
                     alert('Данные успешно изменены!');

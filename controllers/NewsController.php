@@ -2,7 +2,7 @@
 
 class NewsController
 {
-	public function actionAll()
+	public function actionIndex()
 	{
 		$New = News::Instance();
 		$news = $New->All();

@@ -13,7 +13,7 @@ class AdminController
 			if (isset($_POST['title']) && isset($_POST['content']) && $User->GetUid()) {
 				$error = !$New->Add($_POST['title'], $_POST['content'], $User->GetUid());
 				if (!$error) {
-					header('Location: index.php?ctrl=Admin');
+					header('Location: Admin');
 				}
 			}
 			$view->title = 'Добавление статьи';
@@ -43,13 +43,13 @@ class AdminController
 			if (isset($_POST['delete_id'])) {
 				$error = !$New->Delete($_POST['delete_id']);
 				if (!$error) {
-					header('Location: index.php?ctrl=Admin');
+					header('Location: Admin');
 				}
 			}
 			if (isset($_POST['title']) && isset($_POST['content'])) {
 				$error = !$New->Edit($_GET['id'], $_POST['title'], $_POST['content']);
 				if (!$error) {
-					header('Location: index.php?ctrl=Admin');
+					header('Location: Admin');
 				}
 			}
 
@@ -63,7 +63,7 @@ class AdminController
 		}
 	}
 
-	public function actionAll()
+	public function actionIndex()
 	{
 		$User = new Users();
 		$view = new View();

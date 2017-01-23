@@ -1,10 +1,10 @@
-<a href="index.php">Главная страница</a>
+<a href="/">Главная страница</a>
 <hr/>
 <h1>Редактор статьи</h1>
 <? if($error) :?>
 	<b style="color: red;">Заполните все поля!</b>
 <? endif ?>
-<form method="post" action="index.php?ctrl=Admin&action=Edit&id=<?=$article['id_article']?>">
+<form method="post" action="Admin/Edit/?id=<?=$article['id_article']?>">
 	Название:
 	<br/>
 	<input type="text" name="title" value="<?=$article['title']?>" />
