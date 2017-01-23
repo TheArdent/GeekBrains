@@ -1,5 +1,4 @@
 <b><?=$title?></b>
-<a href="index.php?ctrl=Admin">Консоль редактора</a>
 <hr/>
 <ul>
 	<? foreach ($articles as $article_intro): ?>

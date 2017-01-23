@@ -17,6 +17,9 @@ class UserController
 		}
 		else {
 			$view->login = $User->Get()['login'];
+			if ($User->Can('EDIT_USER_ROLES')){
+				$view->admin = true;
+			}
 			$view->content = $view->render('User/index');
 		}
 		echo $view->content;

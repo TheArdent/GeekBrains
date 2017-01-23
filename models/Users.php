@@ -110,6 +110,22 @@ class Users
 		$this->uid = null;
 	}
 
+
+	// Получаем всех пользователей
+	public function GetAllUser()
+	{
+		return $this->msql->Select('SELECT users.id_user,users.login,roles.name FROM users INNER JOIN roles WHERE users.id_role = roles.id_role');
+	}
+
+	// Изменить роль для конкретного пользователя
+	public function SetRoleUser( $user_id, $role_name)
+	{
+		$role_id = $this->msql->Select("SELECT * FROM roles WHERE roles.name = '{$role_name}'")[0]['id_role'];
+		$role = array('id_role' => $role_id);
+		$result = $this->msql->Update('users', $role, 'id_user = '.$user_id);
+		return $result;
+	}
+
 	//
 	// Получение пользователя
 	// $id_user		- если не указан, брать текущего
@@ -152,13 +168,21 @@ class Users
 	//
 	public function Can($priv, $id_user = null)
 	{
-		$id_user = $id_user ? $id_user : $this->GetUid();
+		if ($id_user == null)
+			$id_user = $this->GetUid();
 
-		$result = $this->msql->Select("select * from users inner join privs2roles on users.id_role = privs2roles.id_roles where id_user = {$id_user} and id_priv = {$priv}");
+		if ($id_user == null)
+			return false;
 
-		if ($result)
-			return true;
-		else return false;
+		$t = "SELECT count(*) as cnt FROM privs2roles
+			  LEFT JOIN users u ON u.id_role = privs2roles.id_roles
+			  LEFT JOIN privs p ON p.id_priv = privs2roles.id_priv 
+			  WHERE u.id_user = '%d' AND p.name = '%s'";
+
+		$query  = sprintf($t, $id_user, $priv);
+		$result = $this->msql->Select($query);
+
+		return ($result[0]['cnt'] > 0);
 	}
 
 	//

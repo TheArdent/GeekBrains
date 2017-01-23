@@ -1,5 +1,4 @@
-<a href="index.php">Главная</a> |
-<a href="index.php?ctrl=Admin">Консоль редактора</a>
+<a href="index.php">Главная страница</a>
 <hr/>
 <h1>Редактор статьи</h1>
 <? if($error) :?>

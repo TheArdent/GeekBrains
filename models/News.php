@@ -25,10 +25,10 @@ class News
 		return $My_DB->Delete('articles','id_article = '.$id);
 	}
 
-	public function Add($title, $content)
+	public function Add($title, $content, $id_user)
 	{
 		$My_DB = DB::GetInstance();
-		return $My_DB->Insert('articles', [ 'title' => $title, 'content' => $content]);
+		return $My_DB->Insert('articles', [ 'title' => $title, 'content' => $content, 'id_user' => $id_user]);
 	}
 
 	public function Edit($id, $title, $content)

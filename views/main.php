@@ -93,6 +93,21 @@
                 }
             });
         }
+
+        function changeUser(user_id,item) {
+            var role = $(item).prev('#roles').val();
+
+            var str = "ctrl=Admin&action=Roles&user_id="+user_id+"&role="+role;
+            $.ajax({
+                type: "GET",
+                url: "index.php",
+                data: str,
+                success: function(msg){
+                    alert('Данные успешно изменены!');
+                }
+            });
+        }
+
         function loadpage() {
             loadComments();
             userIndex();
